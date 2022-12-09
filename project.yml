@@ -1,0 +1,12 @@
+packages:
+  - name: ts
+    actions:
+      - name: test
+        runtime: go:default
+        limits:
+          timeout: 5000
+        environment:
+          DB_USERNAME: "${DB_USERNAME}"
+          DB_PASSWORD: "${DB_PASSWORD}"
+          DB_HOST: "${DB_HOST}"
+          DB_PORT: "${DB_PORT}"
