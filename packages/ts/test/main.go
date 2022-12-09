@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+	"log"
 	"net"
 	"os"
 	"time"
@@ -16,6 +17,7 @@ import (
 func Main(args map[string]interface{}) map[string]interface{} {
 	db, err := dbFromEnv()
 	if err != nil {
+		log.Printf("error getting db conn: %s", err.Error())
 		return map[string]interface{}{
 			"body":   fmt.Sprintf(`{"status":"failed","error":"%w"}`, err),
 			"errors": err.Error(),
@@ -27,6 +29,7 @@ func Main(args map[string]interface{}) map[string]interface{} {
 	defer cancel()
 
 	if err := db.PingContext(ctx); err != nil {
+		log.Printf("error pinging db: %s", err.Error())
 		return map[string]interface{}{
 			"body":   fmt.Sprintf(`{"status":"failed","error":"pinging db: %s"}`, err.Error()),
 			"errors": err.Error(),
